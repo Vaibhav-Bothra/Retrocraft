@@ -20,11 +20,10 @@ passport.use(
         }
 
         const isPasswordValid = bcrypt.compareSync(password, user.password);
-        console.log(isPasswordValid);
+        // console.log(isPasswordValid);
         if (!isPasswordValid) {
           return done("Invalid Email or Password", false);
         }
-
         return done(null, user);
       });
     }
@@ -37,10 +36,6 @@ passport.serializeUser(function (user, done) {
 
 passport.deserializeUser(function (id, done) {
   User.findById(id).then((user) => {
-    // if (err) {
-    //   console.log("Error in finding user --> Passport");
-    //   return done(err);
-    // }
     return done(null, user);
   });
 });
@@ -53,17 +48,19 @@ passport.checkAuthentication = function (req, res, next) {
   }
 
   // if the user is not signed in
-  //   return res.redirect("/users/signin");
+  return res.json({ error: "Not signed in..." });
 };
 
-// passport.alreadyAuthenticated = function (req, res, next) {
-//   if (req.isAuthenticated()) {
-//     // return res.redirect("/");
-//   }
-//   return next();
-// };
+passport.alreadyAuthenticated = function (req, res, next) {
+  if (req.isAuthenticated()) {
+    return;
+    // return res.redirect("/");
+  }
+  return next();
+};
 
 passport.setAuthenticatedUser = function (req, res, next) {
+  console.log(req.url);
   if (req.isAuthenticated()) {
     // req.user contains the current signed in user from the session cookie and we are just sending this to the locals for the views
     res.locals.user = req.user;

@@ -5,5 +5,7 @@ export function getformbody(params) {
     let encodedValue = encodeURIComponent(params[prop]); //encodeURIComponent makes akash gupta as akash%20gupta
     formbody.push(encodedKey + "=" + encodedValue);
   }
-  return formbody.join("&");
+  let a = formbody.join("&");
+  console.log(a);
+  return a;
 }

@@ -1,13 +1,107 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+.alert {
+  padding: 10px;
+  width: 100%;
+  box-sizing: border-box;
+  border-radius: 5px;
+  margin-top: 15px;
+  align-self: flex-start;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+.error-dialog {
+  color: #721c24;
+  background-color: #f8d7da;
+  border-color: #f5c6cb;
+}
+
+/* LOGIN AND SIGNUP CSS */
+
+.login-signup-header {
+  font-weight: 600;
+  font-size: 30px;
+  color: #ef7917;
+  text-align: center;
+}
+.login-form {
+  background-color: #fff;
+  padding: 20px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 30%;
+  margin: 50px auto;
+  border-radius: 6px;
+}
+.field {
+  width: 100%;
+}
+.field input {
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  box-sizing: border-box;
+  border-radius: 6px;
+  width: 100%;
+  height: 40px;
+  margin-top: 20px;
+  padding: 5px;
+  font-size: 15px;
+}
+.field input:focus {
+  outline: none;
+}
+.field button {
+  width: 100%;
+  margin-top: 20px;
+  background: #ef7917;
+  border-radius: 2px;
+  color: #fff;
+  font-size: 20px;
+  padding: 9px;
+  border: none;
+  outline: none;
+}
+.field button:hover {
+  cursor: pointer;
+}
+
+.signup-form {
+  width: 50%;
+  margin: auto;
+  margin-top: 2%;
+}
+.wrapper {
+  margin: auto;
+  background-color: whitesmoke;
+  list-style-type: none;
+  padding: 0;
+  border-radius: 3px;
+}
+.form-row {
+  display: flex;
+  justify-content: center;
+  padding: 0.5em;
+}
+.form-row > label {
+  padding: 0.5em 1em 0.5em 0;
+  flex: 1;
+}
+.form-row > input,
+select {
+  flex: 2;
+}
+.form-row > input,
+.form-row > select {
+  padding: 0.5em;
+}
+.signupbtn {
+  width: 100%;
+  font-size: large;
+  padding: 1%;
+  background: #27aedb;
+  color: black;
+  border: 0;
+}
+.signupbtn:hover {
+  cursor: pointer;
+  box-shadow: 3px 3px 3px rgba(68, 68, 68, 0.6);
 }

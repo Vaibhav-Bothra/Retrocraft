@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { signUp } from "../actions/auth";
+import { useNavigate } from "react-router-dom";
 import validator from "validator";
 
 function Signup(props) {
@@ -15,18 +16,11 @@ function Signup(props) {
   const [validCredentials, setValid] = useState(true);
   const [strongValid, setStrongValid] = useState(true);
   const auth = useSelector((state) => state.auth);
+  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
-    console.log(name);
-    console.log(email);
-    console.log(file);
-    console.log(password);
-    console.log(confirmPassword);
-    console.log(gender);
-    console.log(number);
-    console.log(profession);
     if (!validator.isStrongPassword(password)) {
       setStrongValid(false);
     }
@@ -49,6 +43,11 @@ function Signup(props) {
       setValid(false);
     }
   };
+
+  if (auth.isLoggedIn) {
+    navigate("/", { replace: true });
+    return;
+  }
 
   return (
     <div>

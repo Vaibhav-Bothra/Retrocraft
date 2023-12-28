@@ -5,14 +5,18 @@ const passport = require("passport");
 const passportLocal = require("./config/passportLocalStrategy");
 const session = require("express-session");
 const cors = require("cors");
+const cookieParser = require("cookie-parser");
 
 const app = express();
 
+app.use(cookieParser());
 app.use(express.urlencoded());
 app.use(
   cors({
-    origin: "https://localhost:3000",
+    origin: "http://127.0.0.1:3000",
     method: "GET,POST",
+    credentials: true,
+    "Access-Control-Allow-Credentials": true,
   })
 );
 
@@ -23,7 +27,7 @@ app.use(
     saveUninitialized: false,
     resave: false,
     cookie: {
-      maxAge: 1000 * 60 * 100,
+      maxAge: 1000 * 24 * 60 * 60,
     },
   })
 );
@@ -31,9 +35,9 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
-// app.use(passport.setAuthenticatedUser);
+app.use(passport.setAuthenticatedUser);
 
-app.use("/api", require("./routes/index"));
+app.use("/", require("./routes/index"));
 
 app.listen(process.env.PORT, (err) => {
   if (err) console.log(`Error in setting up server: ${err}`);

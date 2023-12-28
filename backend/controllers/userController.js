@@ -1,3 +1,4 @@
+const jwt = require("jsonwebtoken");
 const User = require("../models/User");
 const bcrypt = require("bcrypt");
 const salt = bcrypt.genSaltSync(10);
@@ -18,8 +19,11 @@ module.exports.signUp = function (req, res) {
         profilePicture: req.body.file,
         profession: req.body.profession,
       }).then((user) => {
+        const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
+          expiresIn: "1d",
+        });
         console.log(user);
-        return res.json({ success: true, user });
+        return res.json({ success: true, user, token });
       });
     } else {
       return res.json({
@@ -31,12 +35,33 @@ module.exports.signUp = function (req, res) {
 };
 
 module.exports.signIn = function (req, res) {
+  const user = req.user;
+  const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
+    expiresIn: "1d",
+  });
+  console.log(req.isAuthenticated());
+  console.log(req.session);
   console.log(req.user);
-  // passport.authenticate("local", function (err, user, info) {
-  //   if (err) {
-  //     return res.json({ errorMessage: err.message });
-  //   }
-  //   return res.json({ success: true, user: user });
-  // });
-  return res.json({ success: true, user: req.user });
+  console.log(token);
+  return res.json({ success: true, user: req.user, token });
+};
+
+module.exports.getProfile = function (req, res) {
+  console.log(req.params.id);
+  User.findById(req.params.id).then((user) => {
+    return res.json({
+      success: true,
+      user: user,
+    });
+  });
+};
+
+module.exports.logout = function (req, res) {
+  req.logout(function (err) {
+    if (err) {
+      console.log("Error in logging out of the page:", err);
+      return res.json({ error: "Error in logging out..." });
+    }
+    return res.json({ success: true });
+  });
 };
