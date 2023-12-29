@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, Route, Routes, BrowserRouter } from "react-router-dom";
 import { authenticateUser } from "../actions/auth";
 import Navbar from "./Navbar";
+import Footer from "./Footer";
 
 function App(props) {
   const dispatch = useDispatch();
@@ -42,8 +43,10 @@ function App(props) {
           <Route path="/" element={<Home />} />
           <Route path="/login" Component={Login} />
           <Route path="/signup" Component={Signup} />
+          <Route path="/job/:id" Component={Login} />
         </Routes>
       </div>
+      <Footer />
     </BrowserRouter>
   );
 }

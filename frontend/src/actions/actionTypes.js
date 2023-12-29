@@ -11,3 +11,8 @@ export const SIGNUP_FAILED = "SIGNUP_FAILED";
 //auth state
 export const CLEAR_AUTH_STATE = "CLEAR_AUTH_STATE";
 export const AUTHENTICATE_USER = "AUTHENTICATE_USER";
+
+//jobs fetching
+export const FETCH_JOBS_FAILED = "FETCH_JOBS_FAILED";
+export const FETCH_JOBS_START = "FETCH_JOBS_START";
+export const FETCH_JOBS_SUCCESSFUL = "FETCH_JOBS_SUCCESSFUL";

@@ -14,14 +14,14 @@ function Login(props) {
 
   useEffect(() => {
     return () => dispatch(clearAuthState());
-  }, []);
+  }, [dispatch]);
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
 
     if (validator.isEmail(email) && !validator.isEmpty(password)) {
       setValid(true);
-      await dispatch(signIn(email, password));
+      dispatch(signIn(email, password));
       console.log(auth);
       if (auth.isLoggedIn) {
         navigate("http://localhost:3000/", { replace: true });

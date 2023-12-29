@@ -215,12 +215,18 @@ function Navbar() {
               }}
             >
               <Button variant="contained" sx={{ my: 2, mr: 2 }}>
-                <Link to="/" style={{ color: "white", textDecoration: "none" }}>
+                <Link
+                  to="/login"
+                  style={{ color: "white", textDecoration: "none" }}
+                >
                   LOGIN
                 </Link>
               </Button>
               <Button variant="contained" sx={{ my: 2 }}>
-                <Link to="/" style={{ color: "white", textDecoration: "none" }}>
+                <Link
+                  to="/signup"
+                  style={{ color: "white", textDecoration: "none" }}
+                >
                   SIGNUP
                 </Link>
               </Button>
