@@ -7,6 +7,7 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, Route, Routes, BrowserRouter } from "react-router-dom";
 import { authenticateUser } from "../actions/auth";
+import Navbar from "./Navbar";
 
 function App(props) {
   const dispatch = useDispatch();
@@ -35,6 +36,7 @@ function App(props) {
   // console.log(props);
   return (
     <BrowserRouter>
+      <Navbar />
       <div>
         <Routes>
           <Route path="/" element={<Home />} />

@@ -1,5 +1,6 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
+import Navbar from "./Navbar";
 
 function Home(props) {
   const auth = useSelector((state) => state.auth);
@@ -21,7 +22,7 @@ function Home(props) {
 
   return (
     <div>
-      HOME
+      {/* <Navbar /> */}
       <button onClick={handleLogout}>LOGOUT</button>
     </div>
   );
