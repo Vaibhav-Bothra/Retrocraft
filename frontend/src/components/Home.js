@@ -7,43 +7,26 @@ import {
   ListItemIcon,
   MenuItem,
   MenuList,
-  Pagination,
   Stack,
   Typography,
 } from "@mui/material";
 import Header from "./Header";
-import {
-  fetchJobsFailed,
-  fetchJobsStart,
-  fetchJobsSuccess,
-} from "../actions/jobs";
 import Loading from "./Loading";
 import CardElement from "./CardElement";
 // import { Link } from "react-router-dom";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
+import ClearIcon from "@mui/icons-material/Clear";
 
 function Home(props) {
   const auth = useSelector((state) => state.auth);
   const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(fetchJobsStart());
-    let url = "http://127.0.0.1:5000/api/jobs";
-    fetch(url, {
-      method: "GET",
-      credentials: "include",
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log(data);
-        if (data.success) {
-          dispatch(fetchJobsSuccess(data.jobs));
-        } else if (data.error) {
-          dispatch(fetchJobsFailed(data.error));
-        }
-      });
-  }, []);
+  const [selected_jobs, setSelectedJobs] = useState([]);
   const jobState = useSelector((state) => state.jobState);
   let jobs = jobState.jobs;
+  useEffect(() => {
+    setSelectedJobs(jobs);
+    console.log(selected_jobs);
+  }, [jobs]);
   const locations = [];
   for (let i of jobs) {
     if (!locations.includes(i.location)) {
@@ -52,12 +35,17 @@ function Home(props) {
   }
 
   const handleChange = (loc) => {
-    let dummy = [];
+    if (loc == null) {
+      setSelectedJobs(jobs);
+      return;
+    }
+    let a = [];
     for (let j of jobs) {
       if (j.location == loc) {
-        dummy.push(j);
+        a.push(j);
       }
     }
+    setSelectedJobs(a);
   };
 
   const handleLogout = async (e) => {
@@ -76,7 +64,6 @@ function Home(props) {
 
   return (
     <div>
-      {/* <Navbar /> */}
       <Header />
       <button onClick={handleLogout}>LOGOUT</button>
       <Container>
@@ -109,11 +96,20 @@ function Home(props) {
                           />
                         </ListItemIcon>
                         <Typography>{location}</Typography>
-                        {/* <Link to={`/search/location/${location}`}>
-                          {location}
-                        </Link> */}
                       </MenuItem>
                     ))}
+                  <MenuItem
+                    key={locations.length + 1}
+                    sx={{ color: "darkblue" }}
+                    onClick={() => {
+                      handleChange(null);
+                    }}
+                  >
+                    <ListItemIcon>
+                      <ClearIcon sx={{ color: "black", fontSize: 18 }} />
+                    </ListItemIcon>
+                    <Typography>Clear Filter</Typography>
+                  </MenuItem>
                 </MenuList>
               </Box>
             </Card>
@@ -121,22 +117,8 @@ function Home(props) {
           <Box sx={{ flex: 5, p: 2 }}>
             {jobState.inProgress ? (
               <Loading />
-            ) : jobs && jobs.length === 0 ? (
-              <>
-                <Box
-                  sx={{
-                    minHeight: "350px",
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                  }}
-                >
-                  <h2>No result found!</h2>
-                </Box>
-              </>
-            ) : (
-              jobs &&
-              jobs.map((job, i) => (
+            ) : selected_jobs && selected_jobs.length > 0 ? (
+              selected_jobs.map((job, i) => (
                 <CardElement
                   key={i}
                   id={job._id}
@@ -145,14 +127,18 @@ function Home(props) {
                   location={job.location}
                 />
               ))
+            ) : (
+              <Box
+                sx={{
+                  minHeight: "350px",
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                <h2>No result found!</h2>
+              </Box>
             )}
-            {/* <Stack spacing={2}>
-              <Pagination
-                page={page}
-                count={pages === 0 ? 1 : pages}
-                onChange={(event, value) => setPage(value)}
-              />
-            </Stack> */}
           </Box>
         </Stack>
       </Container>
