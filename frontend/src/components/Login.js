@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import validator from "validator";
 import { signIn, clearAuthState } from "../actions/auth";
 
@@ -74,7 +74,9 @@ function Login(props) {
               Log In
             </button>
           )}
-          <div className="field">Not have an Account?</div>
+          <div className="signup-req">
+            Not have an Account? <Link to="/signup">Sign Up</Link>
+          </div>
         </div>
       </form>
     );

@@ -8,14 +8,19 @@ import {
   MenuItem,
   MenuList,
   Stack,
+  Input,
+  styled,
   Typography,
 } from "@mui/material";
-import Header from "./Header";
 import Loading from "./Loading";
 import CardElement from "./CardElement";
-// import { Link } from "react-router-dom";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import ClearIcon from "@mui/icons-material/Clear";
+import Paper from "@mui/material/Paper";
+import headerimage from "../images/headerimage.jpg";
+import Divider from "@mui/material/Divider";
+import IconButton from "@mui/material/IconButton";
+import SearchIcon from "@mui/icons-material/Search";
 
 function Home(props) {
   const auth = useSelector((state) => state.auth);
@@ -23,16 +28,30 @@ function Home(props) {
   const [selected_jobs, setSelectedJobs] = useState([]);
   const jobState = useSelector((state) => state.jobState);
   let jobs = jobState.jobs;
+  let searchValue = "";
+
   useEffect(() => {
     setSelectedJobs(jobs);
-    console.log(selected_jobs);
   }, [jobs]);
+
   const locations = [];
   for (let i of jobs) {
     if (!locations.includes(i.location)) {
       locations.push(i.location);
     }
   }
+
+  const StyleHeader = styled(Box)(() => ({
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    minHeight: 450,
+    backgroundImage: `url(${headerimage})`,
+    backgroundSize: "75%",
+    backgroundRepeat: "no-repeat",
+    backgroundPosition: "center",
+    backgroundColor: "grey",
+  }));
 
   const handleChange = (loc) => {
     if (loc == null) {
@@ -48,24 +67,49 @@ function Home(props) {
     setSelectedJobs(a);
   };
 
-  const handleLogout = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    let url = "http://127.0.0.1:5000/api/users/logout";
-    localStorage.removeItem("token");
-    fetch(url, {
-      method: "GET",
-      credentials: "include",
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log(data);
-      });
+    console.log(searchValue);
+    let a = [];
+    for (let j of jobs) {
+      let lowercaseTitle = j.title.toLowerCase();
+      if (lowercaseTitle.includes(searchValue)) {
+        a.push(j);
+      }
+    }
+    setSelectedJobs(a);
+  };
+
+  const handleInputChange = (e) => {
+    searchValue = e.target.value;
   };
 
   return (
     <div>
-      <Header />
-      <button onClick={handleLogout}>LOGOUT</button>
+      <StyleHeader>
+        <Paper
+          component="form"
+          sx={{
+            p: "2px 4px",
+            display: "flex",
+            alignItems: "center",
+            width: 400,
+            bgcolor: "whitesmoke",
+          }}
+        >
+          <Input
+            type="text"
+            sx={{ ml: 1, flex: 1 }}
+            placeholder="Search for Jobs"
+            required
+            onChange={handleInputChange}
+          />
+          <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />
+          <IconButton type="button" sx={{ p: "10px" }} onClick={handleSubmit}>
+            <SearchIcon />
+          </IconButton>
+        </Paper>
+      </StyleHeader>
       <Container>
         <Stack
           direction={{ xs: "column", sm: "row" }}

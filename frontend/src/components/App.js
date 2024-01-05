@@ -15,9 +15,13 @@ import {
   fetchJobsStart,
   fetchJobsSuccess,
 } from "../actions/jobs";
+import ScrollToTop from "./Scroll-to-Top";
 
 function App(props) {
   const dispatch = useDispatch();
+  const auth = useSelector((state) => state.auth);
+  const jobState = useSelector((state) => state.jobState);
+  const jobs = jobState.jobs;
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (token) {
@@ -38,35 +42,38 @@ function App(props) {
           }
         });
     }
-    dispatch(fetchJobsStart());
-    let url = "http://127.0.0.1:5000/api/jobs";
-    fetch(url, {
-      method: "GET",
-      credentials: "include",
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log(data);
-        if (data.success) {
-          dispatch(fetchJobsSuccess(data.jobs));
-        } else if (data.error) {
-          dispatch(fetchJobsFailed(data.error));
-        }
-      });
+    if (jobs.length == 0) {
+      dispatch(fetchJobsStart());
+      let url = "http://127.0.0.1:5000/api/jobs";
+      fetch(url, {
+        method: "GET",
+        credentials: "include",
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          console.log(data);
+          if (data.success) {
+            dispatch(fetchJobsSuccess(data.jobs));
+          } else if (data.error) {
+            dispatch(fetchJobsFailed(data.error));
+          }
+        });
+    }
   }, []);
-  const auth = useSelector((state) => state.auth);
   // console.log(props);
   return (
     <BrowserRouter>
       <Navbar />
-      <div>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/login" Component={Login} />
-          <Route path="/signup" Component={Signup} />
-          <Route path="/job/:id" Component={JobDetail} />
-        </Routes>
-      </div>
+      <ScrollToTop>
+        <div>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/login" Component={Login} />
+            <Route path="/signup" Component={Signup} />
+            <Route path="/job/:id" Component={JobDetail} />
+          </Routes>
+        </div>
+      </ScrollToTop>
       <Footer />
     </BrowserRouter>
   );

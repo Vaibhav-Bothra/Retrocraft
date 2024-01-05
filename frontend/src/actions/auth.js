@@ -4,6 +4,9 @@ import {
   LOGIN_FAILED,
   LOGIN_START,
   LOGIN_SUCCESS,
+  LOGOUT_FAILED,
+  LOGOUT_START,
+  LOGOUT_SUCCESS,
   SIGNUP_FAILED,
   SIGNUP_START,
   SIGNUP_SUCCESS,
@@ -134,5 +137,24 @@ export function authenticateUser(user) {
   return {
     type: AUTHENTICATE_USER,
     user: user,
+  };
+}
+
+export function startLogout() {
+  return {
+    type: LOGOUT_START,
+  };
+}
+
+export function logoutSuccess() {
+  return {
+    type: LOGOUT_SUCCESS,
+  };
+}
+
+export function logoutFailed() {
+  return {
+    type: LOGOUT_FAILED,
+    error: "Some error has occurred.",
   };
 }

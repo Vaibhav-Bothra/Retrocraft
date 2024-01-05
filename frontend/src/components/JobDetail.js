@@ -2,36 +2,34 @@ import { Card, CardContent, Stack, Typography } from "@mui/material";
 import { Box, Container } from "@mui/system";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
-import Footer from "./Footer";
+import { useNavigate, useParams } from "react-router-dom";
 import Loading from "./Loading";
-import Navbar from "./Navbar";
 import Button from "@mui/material/Button";
 
 const JobDetail = () => {
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(true);
   const [singleJob, setSingleJob] = useState({});
-  const { id } = useParams();
   const jobState = useSelector((state) => state.jobState);
   const jobs = jobState.jobs;
+  const auth = useSelector((state) => state.auth);
+  const { id } = useParams();
+  const navigate = useNavigate();
   useEffect(() => {
-    console.log(jobs);
     for (let i of jobs) {
-      console.log(id);
       if (i._id == id) {
         setLoading(false);
-        console.log(i);
         setSingleJob(i);
         break;
       }
     }
-    return () => {
-      setSingleJob({});
-    };
-  }, [id]);
+  }, [jobs]);
 
   const applyForAJob = () => {
+    if (!localStorage.getItem("token")) {
+      navigate("/login");
+      return;
+    }
     // dispatch(
     //   userApplyJobAction({
     //     title: singleJob && singleJob.title,

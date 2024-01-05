@@ -17,7 +17,8 @@ import WorkIcon from "@mui/icons-material/Work";
 import { Link } from "react-router-dom";
 import PersonIcon from "@mui/icons-material/Person";
 import { useLocation } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { logoutFailed, logoutSuccess, startLogout } from "../actions/auth";
 
 function Navbar() {
   const pages = [
@@ -30,6 +31,7 @@ function Navbar() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const auth = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
   const location = useLocation();
   const pathname = location.pathname;
   const routes = ["/login", "/signup"];
@@ -47,6 +49,26 @@ function Navbar() {
 
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
+  };
+
+  const handleLogout = async (e) => {
+    e.preventDefault();
+    dispatch(startLogout());
+    let url = "http://127.0.0.1:5000/api/users/logout";
+    localStorage.removeItem("token");
+    fetch(url, {
+      method: "GET",
+      credentials: "include",
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+        if (data.success) {
+          dispatch(logoutSuccess());
+        } else {
+          dispatch(logoutFailed());
+        }
+      });
   };
 
   return (
@@ -148,9 +170,16 @@ function Navbar() {
               onClick={handleCloseNavMenu}
               sx={{ my: 2, mr: 2, color: "white", display: "block" }}
             >
-              <Link to="/" style={{ color: "white", textDecoration: "none" }}>
-                FIND JOBS
-              </Link>
+              {localStorage.getItem("token") &&
+              auth.user.profession == "hire" ? (
+                <Link to="/" style={{ color: "white", textDecoration: "none" }}>
+                  UPLOAD JOBS
+                </Link>
+              ) : (
+                <Link to="/" style={{ color: "white", textDecoration: "none" }}>
+                  FIND JOBS
+                </Link>
+              )}
             </Button>
             <Button
               onClick={handleCloseNavMenu}
@@ -199,7 +228,7 @@ function Navbar() {
                   Dashboard
                 </MenuItem>
 
-                <MenuItem>
+                <MenuItem onClick={handleLogout}>
                   <ListItemIcon>
                     <Logout fontSize="small" />
                   </ListItemIcon>

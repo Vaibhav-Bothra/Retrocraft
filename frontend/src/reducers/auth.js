@@ -4,6 +4,9 @@ import {
   LOGIN_FAILED,
   LOGIN_START,
   LOGIN_SUCCESS,
+  LOGOUT_FAILED,
+  LOGOUT_START,
+  LOGOUT_SUCCESS,
   SIGNUP_FAILED,
   SIGNUP_START,
   SIGNUP_SUCCESS,
@@ -20,6 +23,7 @@ export default function auth(state = initialAuthState, action) {
   switch (action.type) {
     case LOGIN_START:
     case SIGNUP_START:
+    case LOGOUT_START:
       return {
         ...state,
         inProgress: true,
@@ -35,6 +39,7 @@ export default function auth(state = initialAuthState, action) {
       };
     case LOGIN_FAILED:
     case SIGNUP_FAILED:
+    case LOGOUT_FAILED:
       return {
         ...state,
         error: action.error,
@@ -44,6 +49,13 @@ export default function auth(state = initialAuthState, action) {
       return {
         ...state,
         error: null,
+      };
+    case LOGOUT_SUCCESS:
+      return {
+        ...state,
+        user: {},
+        isLoggedIn: false,
+        inProgress: false,
       };
     default:
       return state;

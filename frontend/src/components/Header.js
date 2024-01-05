@@ -5,7 +5,6 @@ import headerimage from "../images/headerimage.jpg";
 import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
 import SearchIcon from "@mui/icons-material/Search";
-// import SearchInputEl from './SearchInputEl';
 
 function Header(props) {
   let searchValue = "";
