@@ -12,6 +12,7 @@ import {
   SIGNUP_SUCCESS,
 } from "../actions/actionTypes";
 import { getformbody } from "../helpers/utils";
+import { toast } from "react-toastify";
 
 export function startLogin() {
   return {
@@ -50,6 +51,7 @@ export function signIn(email, password) {
         status = response.status;
         if (status === 500) {
           dispatch(loginFailed("Invalid Email/Password..."));
+          toast.error("Invalid Email/Password!!");
           return;
         }
         return response.json();
@@ -59,6 +61,7 @@ export function signIn(email, password) {
         if (data && data.success) {
           localStorage.setItem("token", data.token);
           dispatch(loginSuccess(data.user));
+          toast.success("Logged in successfully!!");
         }
       });
   };
@@ -102,15 +105,15 @@ export function signUp(
         "Content-Type": "application/x-www-form-urlencoded",
       },
       credentials: "include",
-      body: getformbody(
+      body: getformbody({
         name,
         email,
         password,
         file,
         gender,
         profession,
-        number
-      ),
+        number,
+      }),
     })
       .then((response) => {
         return response.json();
@@ -119,8 +122,10 @@ export function signUp(
         console.log(data);
         if (data.success) {
           dispatch(signupSuccess(data.user));
+          toast.success("Signed up successfully!!");
         } else {
           dispatch(signupFailed(data.errorMessage));
+          toast.error(data.errorMessage);
         }
       });
   };

@@ -19,6 +19,7 @@ import PersonIcon from "@mui/icons-material/Person";
 import { useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { logoutFailed, logoutSuccess, startLogout } from "../actions/auth";
+import { ToastContainer } from "react-toastify";
 
 function Navbar() {
   const pages = [
@@ -263,6 +264,7 @@ function Navbar() {
           )}
         </Toolbar>
       </Container>
+      <ToastContainer />
     </AppBar>
   );
 }

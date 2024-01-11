@@ -1,41 +1,7 @@
 const mongoose = require("mongoose");
+const { ObjectId } = mongoose.Schema;
 
 const db = require("../config/mongoose");
-
-const jobsHistorySchema = new mongoose.Schema(
-  {
-    title: {
-      type: String,
-      trim: true,
-      maxlength: 70,
-    },
-    description: {
-      type: String,
-      trim: true,
-    },
-    salary: {
-      type: String,
-      trim: true,
-    },
-    location: {
-      type: String,
-    },
-    interviewDate: {
-      type: Date,
-    },
-    applicationStatus: {
-      type: String,
-      enum: ["pending", "accepted", "rejected"],
-      default: "pending",
-    },
-    user: {
-      type: ObjectId,
-      ref: "Freelancer",
-      required: true,
-    },
-  },
-  { timestamps: true }
-);
 
 const hireSchema = new mongoose.Schema(
   {
@@ -68,13 +34,13 @@ const hireSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    jobs: [
+    job: [
       {
-        type: mongoose.Schema.Types.ObjectId,
+        type: ObjectId,
         ref: "Jobs",
+        // required: true,
       },
     ],
-    jobsHistory: [jobsHistorySchema],
   },
   {
     timestamps: true,

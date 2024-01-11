@@ -5,6 +5,8 @@ const salt = bcrypt.genSaltSync(10);
 const LocalStrategy = require("passport-local").Strategy;
 
 const User = require("../models/User");
+const Hire = require("../models/Hire");
+const Freelancer = require("../models/Freelancer");
 
 // authentication using passport
 passport.use(
@@ -61,6 +63,7 @@ passport.alreadyAuthenticated = function (req, res, next) {
 
 passport.setAuthenticatedUser = function (req, res, next) {
   // console.log(req.url);
+  // console.log(req.user);
   if (req.isAuthenticated()) {
     // req.user contains the current signed in user from the session cookie and we are just sending this to the locals for the views
     res.locals.user = req.user;

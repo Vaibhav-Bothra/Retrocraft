@@ -2,6 +2,9 @@ import {
   FETCH_JOBS_FAILED,
   FETCH_JOBS_START,
   FETCH_JOBS_SUCCESSFUL,
+  JOBS_APPLY_FAILED,
+  JOBS_APPLY_START,
+  JOBS_APPLY_SUCCESS,
 } from "../actions/actionTypes";
 
 const initialJobsState = {
@@ -10,7 +13,7 @@ const initialJobsState = {
   inProgress: false,
 };
 
-export default function jobState(state = initialJobsState, action) {
+export function jobState(state = initialJobsState, action) {
   switch (action.type) {
     case FETCH_JOBS_START:
       return {
@@ -28,6 +31,36 @@ export default function jobState(state = initialJobsState, action) {
         ...state,
         inProgress: false,
         error: action.error,
+      };
+    default:
+      return state;
+  }
+}
+
+const initialUserApplyState = {
+  error: null,
+  inProgress: false,
+  success: false,
+};
+
+export function userApplyState(state = initialUserApplyState, action) {
+  switch (action.type) {
+    case JOBS_APPLY_START:
+      return {
+        ...state,
+        inProgress: true,
+      };
+    case JOBS_APPLY_FAILED:
+      return {
+        ...state,
+        error: action.error,
+        success: false,
+      };
+    case JOBS_APPLY_SUCCESS:
+      return {
+        ...state,
+        inProgress: false,
+        success: true,
       };
     default:
       return state;

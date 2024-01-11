@@ -1,24 +1,14 @@
 const mongoose = require("mongoose");
+const { ObjectId } = mongoose.Schema;
 
 const db = require("../config/mongoose");
 
 const jobsHistorySchema = new mongoose.Schema(
   {
-    title: {
-      type: String,
-      trim: true,
-      maxlength: 70,
-    },
-    description: {
-      type: String,
-      trim: true,
-    },
-    salary: {
-      type: String,
-      trim: true,
-    },
-    location: {
-      type: String,
+    job: {
+      type: ObjectId,
+      ref: "Jobs",
+      // required: true,
     },
     interviewDate: {
       type: Date,
@@ -63,12 +53,6 @@ const freelancerSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    jobs: [
-      {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Jobs",
-      },
-    ],
     jobsHistory: [jobsHistorySchema],
   },
   {

@@ -31,8 +31,23 @@ function Home(props) {
   let searchValue = "";
 
   useEffect(() => {
-    setSelectedJobs(jobs);
-  }, [jobs]);
+    if (auth.isLoggedIn) {
+      const jobHistory = auth.user.jobsHistory;
+      const jobsId = [];
+      for (let j of jobHistory) {
+        jobsId.push(j.job);
+      }
+      let a = [];
+      for (let i of jobs) {
+        if (!jobsId.includes(i._id)) {
+          a.push(i);
+        }
+      }
+      setSelectedJobs(a);
+    } else {
+      setSelectedJobs(jobs);
+    }
+  }, [jobs, auth]);
 
   const locations = [];
   for (let i of jobs) {
@@ -55,16 +70,46 @@ function Home(props) {
 
   const handleChange = (loc) => {
     if (loc == null) {
-      setSelectedJobs(jobs);
+      if (!auth.isLoggedIn) {
+        setSelectedJobs(jobs);
+        return;
+      }
+      const jobHistory = auth.user.jobsHistory;
+      const jobsId = [];
+      for (let j of jobHistory) {
+        jobsId.push(j.job);
+      }
+      let a = [];
+      for (let i of jobs) {
+        if (!jobsId.includes(i._id)) {
+          a.push(i);
+        }
+      }
+      setSelectedJobs(a);
       return;
     }
-    let a = [];
-    for (let j of jobs) {
-      if (j.location == loc) {
-        a.push(j);
+    if (auth.isLoggedIn) {
+      const jobHistory = auth.user.jobsHistory;
+      const jobsId = [];
+      for (let j of jobHistory) {
+        jobsId.push(j.job);
       }
+      let a = [];
+      for (let j of jobs) {
+        if (!jobsId.includes(j._id) && j.location == loc) {
+          a.push(j);
+        }
+      }
+      setSelectedJobs(a);
+    } else {
+      let a = [];
+      for (let j of jobs) {
+        if (j.location == loc) {
+          a.push(j);
+        }
+      }
+      setSelectedJobs(a);
     }
-    setSelectedJobs(a);
   };
 
   const handleSubmit = (e) => {

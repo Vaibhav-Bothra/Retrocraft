@@ -5,6 +5,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import Loading from "./Loading";
 import Button from "@mui/material/Button";
+import { userApplyJobAction } from "../actions/jobs";
+import { toast } from "react-toastify";
 
 const JobDetail = () => {
   const dispatch = useDispatch();
@@ -12,6 +14,7 @@ const JobDetail = () => {
   const [singleJob, setSingleJob] = useState({});
   const jobState = useSelector((state) => state.jobState);
   const jobs = jobState.jobs;
+  const [enable, setEnable] = useState(true);
   const auth = useSelector((state) => state.auth);
   const { id } = useParams();
   const navigate = useNavigate();
@@ -30,14 +33,13 @@ const JobDetail = () => {
       navigate("/login");
       return;
     }
-    // dispatch(
-    //   userApplyJobAction({
-    //     title: singleJob && singleJob.title,
-    //     description: singleJob && singleJob.description,
-    //     salary: singleJob && singleJob.salary,
-    //     location: singleJob && singleJob.location,
-    //   })
-    // );
+    if (auth.user.profession.toLowerCase() == "freelance") {
+      dispatch(userApplyJobAction(id));
+    } else {
+      toast.warning("You cannot apply as you are hiring!!");
+    }
+    setEnable(false);
+    // navigate("/");
   };
 
   return (
@@ -85,6 +87,7 @@ const JobDetail = () => {
               <Box sx={{ flex: 1, p: 2 }}>
                 <Card sx={{ p: 2 }}>
                   <Button
+                    disabled={!enable}
                     onClick={applyForAJob}
                     sx={{ fontSize: "13px" }}
                     variant="contained"

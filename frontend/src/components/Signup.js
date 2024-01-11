@@ -126,9 +126,10 @@ function Signup(props) {
               id="pic"
               required
               onChange={(e) => {
-                const reader = new FileReader();
+                var reader = new FileReader();
                 reader.readAsDataURL(e.target.files[0]);
                 reader.onload = () => {
+                  console.log(reader.result);
                   setFile(reader.result);
                 };
               }}
