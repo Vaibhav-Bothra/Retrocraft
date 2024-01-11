@@ -14,7 +14,7 @@ import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import WorkIcon from "@mui/icons-material/Work";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import PersonIcon from "@mui/icons-material/Person";
 import { useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -35,6 +35,7 @@ function Navbar() {
   const dispatch = useDispatch();
   const location = useLocation();
   const pathname = location.pathname;
+  const navigate = useNavigate();
   const routes = ["/login", "/signup"];
 
   const handleOpenNavMenu = (event) => {
@@ -66,6 +67,7 @@ function Navbar() {
         console.log(data);
         if (data.success) {
           dispatch(logoutSuccess());
+          navigate("/", { replace: true });
         } else {
           dispatch(logoutFailed());
         }
@@ -226,7 +228,11 @@ function Navbar() {
                   <ListItemIcon>
                     <PersonIcon fontSize="small" />
                   </ListItemIcon>
-                  Dashboard
+                  {auth.user.profession.toLowerCase() == "freelance" ? (
+                    <Link to="/freelance/dashboard">Dashboard</Link>
+                  ) : (
+                    <Link to="/hire/dashboard">Dashboard</Link>
+                  )}
                 </MenuItem>
 
                 <MenuItem onClick={handleLogout}>

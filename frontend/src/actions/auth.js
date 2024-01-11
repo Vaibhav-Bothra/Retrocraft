@@ -94,7 +94,8 @@ export function signUp(
   file,
   gender,
   profession,
-  number
+  number,
+  description
 ) {
   return (dispatch) => {
     let url = "http://127.0.0.1:5000/api/users/signup";
@@ -113,6 +114,7 @@ export function signUp(
         gender,
         profession,
         number,
+        description,
       }),
     })
       .then((response) => {

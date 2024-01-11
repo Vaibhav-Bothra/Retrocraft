@@ -6,6 +6,7 @@ import validator from "validator";
 
 function Signup(props) {
   const [name, setName] = useState("");
+  const [description, setDesc] = useState("");
   const [email, setEmail] = useState("");
   const [file, setFile] = useState("");
   const [password, setPassword] = useState("");
@@ -26,6 +27,8 @@ function Signup(props) {
     }
     if (
       validator.isEmail(email) &&
+      !validator.isEmpty(description) &&
+      !validator.isEmpty(name) &&
       !validator.isEmpty(password) &&
       password === confirmPassword &&
       !validator.isEmpty(file) &&
@@ -37,7 +40,16 @@ function Signup(props) {
     ) {
       setValid(true);
       await dispatch(
-        signUp(name, email, password, file, gender, profession, number)
+        signUp(
+          name,
+          email,
+          password,
+          file,
+          gender,
+          profession,
+          number,
+          description
+        )
       );
     } else {
       setValid(false);
@@ -132,6 +144,18 @@ function Signup(props) {
                   console.log(reader.result);
                   setFile(reader.result);
                 };
+              }}
+            />
+          </li>
+
+          <li className="form-row">
+            <label htmlFor="description">Description</label>
+            <input
+              type="text"
+              id="desc"
+              required
+              onChange={(e) => {
+                setDesc(e.target.value);
               }}
             />
           </li>
