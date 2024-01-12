@@ -7,6 +7,7 @@ import Loading from "./Loading";
 import Button from "@mui/material/Button";
 import { userApplyJobAction } from "../actions/jobs";
 import { toast } from "react-toastify";
+import { Link } from "react-router-dom";
 
 const JobDetail = () => {
   const dispatch = useDispatch();
@@ -80,6 +81,9 @@ const JobDetail = () => {
                         <h3>Job Requirements:</h3>
                         {singleJob && singleJob.requirement}
                       </Typography> */}
+                      <Typography variant="body2" sx={{ pt: 2 }}>
+                        <Link to={`/user/${singleJob.producer}`}>Producer's Profile</Link>
+                      </Typography>
                     </CardContent>
                   </Card>
                 )}

@@ -3,8 +3,7 @@ import Login from "./Login";
 import Signup from "./Signup";
 import Home from "./Home";
 import JobDetail from "./JobDetail";
-import FreelanceDashboard from "./FreelanceDashboard";
-import HireDashboard from "./HireDashboard";
+import UserDashboard from "./UserDashboard";
 import { jwtDecode } from "jwt-decode";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -19,6 +18,7 @@ import {
 } from "../actions/jobs";
 import ScrollToTop from "./Scroll-to-Top";
 import Experience from "./Experience";
+import UploadJob from "./UploadJob";
 
 function App(props) {
   const dispatch = useDispatch();
@@ -74,8 +74,8 @@ function App(props) {
             <Route path="/login" Component={Login} />
             <Route path="/signup" Component={Signup} />
             <Route path="/job/:id" Component={JobDetail} />
-            <Route path="/freelance/dashboard" Component={FreelanceDashboard} />
-            <Route path="/hire/dashboard" Component={HireDashboard} />
+            <Route path="/job/upload" Component={UploadJob} />
+            <Route path="/user/:id" Component={UserDashboard} />
             <Route path="/user/experience/add" Component={Experience} />
           </Routes>
         </div>

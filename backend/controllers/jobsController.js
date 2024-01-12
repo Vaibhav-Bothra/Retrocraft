@@ -17,7 +17,7 @@ module.exports.applyJob = async function (req, res) {
   console.log(req.user);
   User.findOne({ _id: req.user._id }).then(async (user) => {
     console.log(user);
-    if (!user || user.profession=='hire') {
+    if (!user || user.profession == "hire") {
       return res.json({ error: "Invalid user..." });
     }
     const jobHistory = {
@@ -33,4 +33,21 @@ module.exports.applyJob = async function (req, res) {
     return res.json({ success: true });
   });
   // return res.json({ error: "Invalid job..." });
+};
+
+module.exports.addJob = function (req, res) {
+  Jobs.create({
+    producer: req.user._id,
+    title: req.body.title,
+    description: req.body.description,
+    requirement: req.body.req,
+    salary: req.body.salary,
+    location: req.body.location,
+  }).then((job) => {
+    User.findById(req.user._id).then(async (user) => {
+      user.job.push(job._id);
+      await user.save();
+      return res.json({ success: true });
+    });
+  });
 };

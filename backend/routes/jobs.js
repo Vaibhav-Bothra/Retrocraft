@@ -7,4 +7,6 @@ const jobsController = require("../controllers/jobsController");
 router.get("/", jobsController.getJobs);
 router.get("/apply/:id", passport.checkAuthentication, jobsController.applyJob);
 
+router.post("/add", passport.checkAuthentication, jobsController.addJob);
+
 module.exports = router;

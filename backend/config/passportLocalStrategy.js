@@ -5,8 +5,6 @@ const salt = bcrypt.genSaltSync(10);
 const LocalStrategy = require("passport-local").Strategy;
 
 const User = require("../models/User");
-const Hire = require("../models/Hire");
-const Freelancer = require("../models/Freelancer");
 
 // authentication using passport
 passport.use(

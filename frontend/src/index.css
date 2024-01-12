@@ -112,3 +112,21 @@ select {
   cursor: pointer;
   box-shadow: 3px 3px 3px rgba(68, 68, 68, 0.6);
 }
+.addbtn {
+  width: 100%;
+  font-size: large;
+  padding: 1%;
+  background: #0ad6a3;
+  color: black;
+  border: 0;
+}
+.addbtn:hover {
+  cursor: pointer;
+  box-shadow: 3px 3px 3px rgba(68, 68, 68, 0.6);
+}
+.add-header{
+  font-weight: 600;
+  font-size: 30px;
+  color: #075968;
+  text-align: center;
+}

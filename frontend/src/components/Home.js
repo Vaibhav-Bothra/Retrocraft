@@ -27,12 +27,16 @@ function Home(props) {
   const dispatch = useDispatch();
   const [selected_jobs, setSelectedJobs] = useState([]);
   const jobState = useSelector((state) => state.jobState);
+  const [profession, setProfession] = useState(0);
   let jobs = jobState.jobs;
   let searchValue = "";
 
   useEffect(() => {
     if (auth.isLoggedIn) {
       const jobHistory = auth.user.jobsHistory;
+      if (auth.user.profession.toLowerCase() == "hire") {
+        setProfession(1);
+      }
       const jobsId = [];
       for (let j of jobHistory) {
         jobsId.push(j.job);

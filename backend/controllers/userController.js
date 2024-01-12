@@ -18,6 +18,7 @@ module.exports.signUp = function (req, res) {
         number: req.body.number,
         profilePicture: req.body.file,
         profession: req.body.profession,
+        description: req.body.description,
       }).then((user) => {
         const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
           expiresIn: "1d",
@@ -53,6 +54,34 @@ module.exports.getProfile = function (req, res) {
       success: true,
       user: user,
     });
+  });
+};
+
+module.exports.addDashboardExp = function (req, res) {
+  console.log(req.body);
+  User.findById(req.user._id).then(async (user) => {
+    let experienceObj = {
+      title: req.body.title,
+      company: req.body.company,
+      duration: req.body.duration,
+      description: req.body.description,
+    };
+    user.experience.push(experienceObj);
+    await user.save();
+    return res.json({ success: true });
+  });
+};
+
+module.exports.addDashboardSkill = function (req, res) {
+  console.log(req.body);
+  User.findById(req.user._id).then(async (user) => {
+    if (!user.skill.includes(req.body.skill)) {
+      user.skill.push(req.body.skill);
+      await user.save();
+      return res.json({ success: true });
+    } else {
+      return res.json({ error: "Already present..." });
+    }
   });
 };
 

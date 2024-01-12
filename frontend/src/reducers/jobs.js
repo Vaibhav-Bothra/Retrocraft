@@ -1,4 +1,7 @@
 import {
+  ADD_JOB_FAILED,
+  ADD_JOB_START,
+  ADD_JOB_SUCCESS,
   FETCH_JOBS_FAILED,
   FETCH_JOBS_START,
   FETCH_JOBS_SUCCESSFUL,
@@ -57,6 +60,36 @@ export function userApplyState(state = initialUserApplyState, action) {
         success: false,
       };
     case JOBS_APPLY_SUCCESS:
+      return {
+        ...state,
+        inProgress: false,
+        success: true,
+      };
+    default:
+      return state;
+  }
+}
+
+const initialAddJobState = {
+  error: null,
+  inProgress: false,
+  success: false,
+};
+
+export function addJobState(state = initialUserApplyState, action) {
+  switch (action.type) {
+    case ADD_JOB_START:
+      return {
+        ...state,
+        inProgress: true,
+      };
+    case ADD_JOB_FAILED:
+      return {
+        ...state,
+        error: action.error,
+        success: false,
+      };
+    case ADD_JOB_SUCCESS:
       return {
         ...state,
         inProgress: false,

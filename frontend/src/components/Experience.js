@@ -41,7 +41,7 @@ function Experience(props) {
   return (
     <div>
       <form className="signup-form">
-        <h1 className="login-signup-header">SIGN UP</h1>
+        <h1 className="add-header">EXPERIENCE</h1>
         <ul className="wrapper">
           <li className="form-row">
             <label htmlFor="title">Title</label>
@@ -56,7 +56,7 @@ function Experience(props) {
           </li>
 
           <li className="form-row">
-            <label htmlFor="company">Company Name</label>
+            <label htmlFor="company">Organisation Name</label>
             <input
               type="text"
               id="company"
@@ -96,7 +96,7 @@ function Experience(props) {
           <button
             disabled={dashboard.inProgress}
             onClick={handleFormSubmit}
-            className="signupbtn"
+            className="addbtn"
           >
             ADD
           </button>

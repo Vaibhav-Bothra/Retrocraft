@@ -15,7 +15,7 @@ const userApplySchema = new mongoose.Schema(
     },
     user: {
       type: ObjectId,
-      ref: "Freelancer",
+      ref: "User",
       // required: true,
     },
   },
@@ -38,7 +38,7 @@ const jobSchema = new mongoose.Schema(
     requirement: {
       type: String,
       trim: true,
-      // required: [true, "Requirement is required"],
+      required: [true, "Requirement is required"],
     },
     salary: {
       type: String,
@@ -51,6 +51,11 @@ const jobSchema = new mongoose.Schema(
     available: {
       type: Boolean,
       default: true,
+    },
+    producer: {
+      type: ObjectId,
+      ref: "User",
+      // required: true,
     },
     user: [userApplySchema],
   },

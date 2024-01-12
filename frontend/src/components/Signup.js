@@ -56,6 +56,19 @@ function Signup(props) {
     }
   };
 
+  const convertToBase64 = (file) => {
+    return new Promise((resolve, reject) => {
+      const fileReader = new FileReader();
+      fileReader.readAsDataURL(file);
+      fileReader.onload = () => {
+        resolve(fileReader.result);
+      };
+      fileReader.onerror = (error) => {
+        reject(error);
+      };
+    });
+  };
+
   if (auth.isLoggedIn) {
     navigate("/", { replace: true });
     return;
@@ -137,13 +150,11 @@ function Signup(props) {
               type="file"
               id="pic"
               required
-              onChange={(e) => {
-                var reader = new FileReader();
-                reader.readAsDataURL(e.target.files[0]);
-                reader.onload = () => {
-                  console.log(reader.result);
-                  setFile(reader.result);
-                };
+              onChange={async (e) => {
+                const file = e.target.files[0];
+                const base64 = await convertToBase64(file);
+                setFile(base64);
+                console.log(base64);
               }}
             />
           </li>

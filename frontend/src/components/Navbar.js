@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useEffect } from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -37,6 +37,12 @@ function Navbar() {
   const pathname = location.pathname;
   const navigate = useNavigate();
   const routes = ["/login", "/signup"];
+  let id = "";
+
+  useEffect(() => {
+    if (auth.isLoggedIn) id = auth.user._id;
+    console.log(id);
+  }, [auth]);
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -175,7 +181,10 @@ function Navbar() {
             >
               {localStorage.getItem("token") &&
               auth.user.profession == "hire" ? (
-                <Link to="/" style={{ color: "white", textDecoration: "none" }}>
+                <Link
+                  to="/job/upload"
+                  style={{ color: "white", textDecoration: "none" }}
+                >
                   UPLOAD JOBS
                 </Link>
               ) : (
@@ -228,11 +237,7 @@ function Navbar() {
                   <ListItemIcon>
                     <PersonIcon fontSize="small" />
                   </ListItemIcon>
-                  {auth.user.profession.toLowerCase() == "freelance" ? (
-                    <Link to="/freelance/dashboard">Dashboard</Link>
-                  ) : (
-                    <Link to="/hire/dashboard">Dashboard</Link>
-                  )}
+                  <Link to={`/user/${auth.user._id}`}>Dashboard</Link>
                 </MenuItem>
 
                 <MenuItem onClick={handleLogout}>

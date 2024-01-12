@@ -61,9 +61,6 @@ function Login(props) {
             value={password}
           />
         </div>
-        {!validCredentials && (
-          <div className="alert error-dialog">Incorrect Email/Password</div>
-        )}
         <div className="field">
           {auth.inProgress ? (
             <button disabled={auth.inProgress} onClick={handleFormSubmit}>
