@@ -85,6 +85,18 @@ module.exports.addDashboardSkill = function (req, res) {
   });
 };
 
+module.exports.getAll = function (req, res) {
+  let users = [];
+  User.find({}).then((user) => {
+    for (let i of user) {
+      if (i.profession.toLowerCase() == "freelance") {
+        users.push(i);
+      }
+    }
+    return res.json({ success: true, users: users });
+  });
+};
+
 module.exports.logout = function (req, res) {
   req.logout(function (err) {
     if (err) {
