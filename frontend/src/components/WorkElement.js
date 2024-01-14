@@ -16,7 +16,7 @@ const WorkElement = ({
 }) => {
   return (
     <Box sx={{ bgcolor: "#fafafa" }}>
-      <Box sx={{ height: "48vh" }}>
+      <Box sx={{ height: "35vh" }}>
         <Container>
           <Stack
             direction={{ xs: "column", sm: "row" }}
@@ -41,29 +41,36 @@ const WorkElement = ({
                     : {location}
                   </Typography>
                   <Typography variant="body2">
-                    <h3>Description:</h3>
-                    {description}
+                    <Box component="span" sx={{ fontWeight: 700 }}>
+                      Description
+                    </Box>
+                    : {description}
                   </Typography>
                   <Typography variant="body2">
-                    <h3>Requirements:</h3>
-                    {requirement}
+                    <Box component="span" sx={{ fontWeight: 700 }}>
+                      Requirements
+                    </Box>
+                    : {requirement}
+                  </Typography>
+                  <Typography variant="body2" sx={{ pt: 2 }}>
+                    <Link to={`/user/${id}`}>Producer's Profile</Link>
                   </Typography>
                 </CardContent>
               </Card>
             </Box>
             <Box sx={{ flex: 1, p: 2 }}>
               {status.toLowerCase() == "pending" && (
-                <Card sx={{ p: 2, fontSize: 23, bgcolor: "#FCECD9" }}>
+                <Card sx={{ p: 2, fontSize: 23, bgcolor: "#FCECD9", mt: 4 }}>
                   Pending
                 </Card>
               )}
               {status.toLowerCase() == "accepted" && (
-                <Card sx={{ p: 2, fontSize: 23, bgcolor: "green" }}>
+                <Card sx={{ p: 2, fontSize: 23, bgcolor: "green", mt: 4 }}>
                   Accepted
                 </Card>
               )}
               {status.toLowerCase() == "rejected" && (
-                <Card sx={{ p: 2, fontSize: 23, bgcolor: "red" }}>
+                <Card sx={{ p: 2, fontSize: 23, bgcolor: "red", mt: 4 }}>
                   Rejected
                 </Card>
               )}
