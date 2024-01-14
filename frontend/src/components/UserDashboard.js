@@ -132,32 +132,37 @@ const UserDashboard = () => {
             </Box>
             {load && (
               <Box sx={{ flex: 2, p: 2 }}>
-                <Paper
-                  component="form"
-                  sx={{
-                    p: "2px 4px",
-                    display: "flex",
-                    alignItems: "center",
-                    width: 400,
-                    bgcolor: "whitesmoke",
-                  }}
-                >
-                  <Input
-                    type="text"
-                    sx={{ ml: 1, flex: 1 }}
-                    placeholder="Skill Name"
-                    required
-                    onChange={handleInputChange}
-                  />
-                  <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />
-                  <Button
-                    onClick={handleSubmit}
-                    sx={{ fontSize: "13px", m: 1 }}
-                    variant="contained"
+                {user.profession.toLowerCase() == "freelance" && (
+                  <Paper
+                    component="form"
+                    sx={{
+                      p: "2px 4px",
+                      display: "flex",
+                      alignItems: "center",
+                      width: 400,
+                      bgcolor: "whitesmoke",
+                    }}
                   >
-                    Add Skill
-                  </Button>
-                </Paper>
+                    <Input
+                      type="text"
+                      sx={{ ml: 1, flex: 1 }}
+                      placeholder="Skill Name"
+                      required
+                      onChange={handleInputChange}
+                    />
+                    <Divider
+                      sx={{ height: 28, m: 0.5 }}
+                      orientation="vertical"
+                    />
+                    <Button
+                      onClick={handleSubmit}
+                      sx={{ fontSize: "13px", m: 1 }}
+                      variant="contained"
+                    >
+                      Add Skill
+                    </Button>
+                  </Paper>
+                )}
                 <Button
                   onClick={addExp}
                   sx={{ fontSize: "14px", m: 1, mt: 2 }}

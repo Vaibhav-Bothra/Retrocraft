@@ -4,6 +4,7 @@ import Signup from "./Signup";
 import Home from "./Home";
 import JobDetail from "./JobDetail";
 import UserDashboard from "./UserDashboard";
+import NotificationFeed from "./NotificationFeed";
 import { jwtDecode } from "jwt-decode";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -76,6 +77,7 @@ function App(props) {
             <Route path="/job/:id" Component={JobDetail} />
             <Route path="/job/upload" Component={UploadJob} />
             <Route path="/user/:id" Component={UserDashboard} />
+            <Route path="/notificationfeed" Component={NotificationFeed} />
             <Route path="/user/experience/add" Component={Experience} />
           </Routes>
         </div>

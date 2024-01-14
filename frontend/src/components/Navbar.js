@@ -197,9 +197,12 @@ function Navbar() {
               onClick={handleCloseNavMenu}
               sx={{ my: 2, color: "white", display: "block" }}
             >
-              <Link to="/" style={{ color: "white", textDecoration: "none" }}>
+              <a
+                href="#footer"
+                style={{ color: "white", textDecoration: "none" }}
+              >
                 CONTACT US
-              </Link>
+              </a>
             </Button>
           </Box>
 

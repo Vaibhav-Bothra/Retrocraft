@@ -8,7 +8,6 @@ function Signup(props) {
   const [name, setName] = useState("");
   const [description, setDesc] = useState("");
   const [email, setEmail] = useState("");
-  const [file, setFile] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [gender, setGender] = useState("");
@@ -31,13 +30,13 @@ function Signup(props) {
       !validator.isEmpty(name) &&
       !validator.isEmpty(password) &&
       password === confirmPassword &&
-      !validator.isEmpty(file) &&
       !validator.isEmpty(number) &&
       !validator.isEmpty(profession) &&
       !validator.isEmpty(gender) &&
       number.toString().length === 10 &&
       validator.isStrongPassword(password)
     ) {
+      let file = "";
       setValid(true);
       await dispatch(
         signUp(
@@ -56,18 +55,18 @@ function Signup(props) {
     }
   };
 
-  const convertToBase64 = (file) => {
-    return new Promise((resolve, reject) => {
-      const fileReader = new FileReader();
-      fileReader.readAsDataURL(file);
-      fileReader.onload = () => {
-        resolve(fileReader.result);
-      };
-      fileReader.onerror = (error) => {
-        reject(error);
-      };
-    });
-  };
+  // const convertToBase64 = (file) => {
+  //   return new Promise((resolve, reject) => {
+  //     const fileReader = new FileReader();
+  //     fileReader.readAsDataURL(file);
+  //     fileReader.onload = () => {
+  //       resolve(fileReader.result);
+  //     };
+  //     fileReader.onerror = (error) => {
+  //       reject(error);
+  //     };
+  //   });
+  // };
 
   if (auth.isLoggedIn) {
     navigate("/", { replace: true });
@@ -144,7 +143,7 @@ function Signup(props) {
             />
           </li>
 
-          <li className="form-row">
+          {/* <li className="form-row">
             <label htmlFor="pic">Profile Picture</label>
             <input
               type="file"
@@ -157,7 +156,7 @@ function Signup(props) {
                 console.log(base64);
               }}
             />
-          </li>
+          </li> */}
 
           <li className="form-row">
             <label htmlFor="description">Description</label>
