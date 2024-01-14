@@ -97,6 +97,22 @@ module.exports.getAll = function (req, res) {
   });
 };
 
+module.exports.fetchJobs = async function (req, res) {
+  // console.log(req.user);
+  await User.findById(req.user._id)
+    .populate({
+      path: "job",
+      populate: {
+        path: "user.user",
+      },
+    })
+    .populate({ path: "jobsHistory.job" })
+    .then((user) => {
+      console.log(user);
+      return res.json({ success: true, user });
+    });
+};
+
 module.exports.logout = function (req, res) {
   req.logout(function (err) {
     if (err) {

@@ -36,7 +36,8 @@ function Signup(props) {
       number.toString().length === 10 &&
       validator.isStrongPassword(password)
     ) {
-      let file = "";
+      let file =
+        "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAB9JREFUOE9jZKAQMFKon2HUAIbRMGAYDQNQPhr4vAAAJpgAEX/anFwAAAAASUVORK5CYII=";
       setValid(true);
       await dispatch(
         signUp(

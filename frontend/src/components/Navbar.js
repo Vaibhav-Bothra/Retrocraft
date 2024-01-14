@@ -171,9 +171,18 @@ function Navbar() {
               onClick={handleCloseNavMenu}
               sx={{ my: 2, mr: 2, color: "white", display: "block" }}
             >
-              <Link to="/" style={{ color: "white", textDecoration: "none" }}>
-                NOTIFICATION FEED
-              </Link>
+              {auth.isLoggedIn ? (
+                <Link
+                  to="/notificationfeed"
+                  style={{ color: "white", textDecoration: "none" }}
+                >
+                  NOTIFICATION FEED
+                </Link>
+              ) : (
+                <Link to="/" style={{ color: "white", textDecoration: "none" }}>
+                  NOTIFICATION FEED
+                </Link>
+              )}
             </Button>
             <Button
               onClick={handleCloseNavMenu}

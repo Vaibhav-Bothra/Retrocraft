@@ -4,8 +4,17 @@ const passport = require("passport");
 
 const userController = require("../controllers/userController");
 
-router.get("/profile/:id", userController.getProfile);
+router.get(
+  "/profile/:id",
+  passport.checkAuthentication,
+  userController.getProfile
+);
 router.get("/all", userController.getAll);
+router.get(
+  "/fetchjobs",
+  passport.checkAuthentication,
+  userController.fetchJobs
+);
 router.get("/logout", userController.logout);
 
 router.post("/signup", userController.signUp);
