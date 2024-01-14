@@ -5,17 +5,17 @@ import Button from "@mui/material/Button";
 import { Link } from "react-router-dom";
 
 const UserElement = ({ user, job }) => {
-  const handleAccept = () => {
-    let url = "http://127.0.0.1:5000/api/users/acceptjob";
-    fetch(url, {
-      method: "POST",
-      credentials: "include",
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log(data);
-      });
-  };
+  //   const handleAccept = () => {
+  //     let url = "http://127.0.0.1:5000/api/users/acceptjob";
+  //     fetch(url, {
+  //       method: "POST",
+  //       credentials: "include",
+  //     })
+  //       .then((response) => response.json())
+  //       .then((data) => {
+  //         console.log(data);
+  //       });
+  //   };
 
   return (
     <Box sx={{ bgcolor: "#fafafa" }}>
@@ -50,7 +50,7 @@ const UserElement = ({ user, job }) => {
                     sx={{ fontSize: "15px", mr: 1 }}
                     variant="contained"
                     color="success"
-                    onChange={handleAccept}
+                    // onChange={handleAccept}
                   >
                     Accept
                   </Button>
