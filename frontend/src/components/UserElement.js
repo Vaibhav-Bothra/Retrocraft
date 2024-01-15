@@ -1,21 +1,26 @@
 import * as React from "react";
+import { useEffect } from "react";
 import { Card, CardContent, Stack, Typography } from "@mui/material";
 import { Box, Container } from "@mui/system";
 import Button from "@mui/material/Button";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { accrejJob } from "../actions/jobs";
 
 const UserElement = ({ user, job }) => {
-  //   const handleAccept = () => {
-  //     let url = "http://127.0.0.1:5000/api/users/acceptjob";
-  //     fetch(url, {
-  //       method: "POST",
-  //       credentials: "include",
-  //     })
-  //       .then((response) => response.json())
-  //       .then((data) => {
-  //         console.log(data);
-  //       });
-  //   };
+  const dispatch = useDispatch();
+  const auth = useSelector((state) => state.auth);
+  const acceptJobState = useSelector((state) => state.acceptJobState);
+
+  const handleAccept = () => {
+    dispatch(accrejJob("accepted", user.user._id, job._id));
+    window.location.reload(false);
+  };
+
+  const handleReject = () => {
+    dispatch(accrejJob("rejected", user.user._id, job._id));
+    window.location.reload(false);
+  };
 
   return (
     <Box sx={{ bgcolor: "#fafafa" }}>
@@ -50,7 +55,8 @@ const UserElement = ({ user, job }) => {
                     sx={{ fontSize: "15px", mr: 1 }}
                     variant="contained"
                     color="success"
-                    // onChange={handleAccept}
+                    disabled={acceptJobState.inProgress}
+                    onClick={handleAccept}
                   >
                     Accept
                   </Button>
@@ -58,6 +64,8 @@ const UserElement = ({ user, job }) => {
                     sx={{ fontSize: "15px" }}
                     variant="contained"
                     color="error"
+                    disabled={acceptJobState.inProgress}
+                    onClick={handleReject}
                   >
                     Reject
                   </Button>

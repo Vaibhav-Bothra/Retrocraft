@@ -41,11 +41,6 @@ const JobElement = ({ job }) => {
                 </CardContent>
               </Card>
             </Box>
-            <Box sx={{ flex: 1, p: 2 }}>
-              <Button sx={{ fontSize: "15px", mt: 5 }} variant="contained">
-                Delete
-              </Button>
-            </Box>
           </Stack>
         </Container>
       </Box>

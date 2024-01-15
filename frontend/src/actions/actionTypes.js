@@ -36,3 +36,13 @@ export const ADD_EXPERIENCE_FAILED = "ADD_EXPERIENCE_FAILED";
 export const ADD_JOB_START = "ADD_JOB_START";
 export const ADD_JOB_SUCCESS = "ADD_JOB_SUCCESS";
 export const ADD_JOB_FAILED = "ADD_JOB_FAILED";
+
+//job accepting
+export const ACCEPT_JOB_START = "ACCEPT_JOB_START";
+export const ACCEPT_JOB_SUCCESS = "ACCEPT_JOB_SUCCESS";
+export const ACCEPT_JOB_FAILED = "ACCEPT_JOB_FAILED";
+
+//job rejecting
+export const REJECT_JOB_START = "REJECT_JOB_START";
+export const REJECT_JOB_SUCCESS = "REJECT_JOB_SUCCESS";
+export const REJECT_JOB_FAILED = "REJECT_JOB_FAILED";

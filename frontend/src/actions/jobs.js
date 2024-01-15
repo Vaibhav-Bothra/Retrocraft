@@ -1,6 +1,9 @@
 import { getformbody } from "../helpers/utils";
 import "react-toastify/dist/ReactToastify.css";
 import {
+  ACCEPT_JOB_FAILED,
+  ACCEPT_JOB_START,
+  ACCEPT_JOB_SUCCESS,
   ADD_JOB_FAILED,
   ADD_JOB_START,
   ADD_JOB_SUCCESS,
@@ -10,6 +13,9 @@ import {
   JOBS_APPLY_FAILED,
   JOBS_APPLY_START,
   JOBS_APPLY_SUCCESS,
+  REJECT_JOB_FAILED,
+  REJECT_JOB_START,
+  REJECT_JOB_SUCCESS,
 } from "./actionTypes";
 import { toast } from "react-toastify";
 
@@ -122,5 +128,104 @@ export const addJob = (title, description, location, salary, req) => {
           toast.error(data.error);
         }
       });
+  };
+};
+
+export function jobAcceptStart() {
+  return {
+    type: ACCEPT_JOB_START,
+  };
+}
+
+export function jobAcceptFailed(errorMessage) {
+  return {
+    type: ACCEPT_JOB_FAILED,
+    errorMessage,
+  };
+}
+
+export function jobAcceptSuccess(successMessage) {
+  return {
+    type: ACCEPT_JOB_SUCCESS,
+    successMessage,
+  };
+}
+
+export function jobRejectStart() {
+  return {
+    type: REJECT_JOB_START,
+  };
+}
+
+export function jobRejectFailed(errorMessage) {
+  return {
+    type: REJECT_JOB_FAILED,
+    errorMessage,
+  };
+}
+
+export function jobRejectSuccess(successMessage) {
+  return {
+    type: REJECT_JOB_SUCCESS,
+    successMessage,
+  };
+}
+
+export const accrejJob = (message, userId, jobId) => {
+  return (dispatch) => {
+    let url = "http://127.0.0.1:5000/api/jobs/request";
+    let a = 1;
+    if (message == "accepted") {
+      a = 0;
+    }
+    if (a == 0) {
+      dispatch(jobAcceptStart());
+      fetch(url, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+        credentials: "include",
+        body: getformbody({
+          message,
+          jobId,
+          userId,
+        }),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          if (data.success) {
+            toast.success(data.successMessage);
+            dispatch(jobAcceptSuccess(data.successMessage));
+          } else {
+            toast.error("Some error occured!!");
+            dispatch(jobAcceptFailed(data.errorMessage));
+          }
+        });
+    } else {
+      dispatch(jobRejectStart());
+      fetch(url, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+        credentials: "include",
+        body: getformbody({
+          message,
+          jobId,
+          userId,
+        }),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          if (data.success) {
+            toast.success(data.successMessage);
+            dispatch(jobRejectSuccess(data.successMessage));
+          } else {
+            toast.error("Some error occured!!");
+            dispatch(jobRejectFailed(data.errorMessage));
+          }
+        });
+    }
   };
 };

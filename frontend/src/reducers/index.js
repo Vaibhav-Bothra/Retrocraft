@@ -1,7 +1,7 @@
 import { combineReducers } from "redux";
 import auth from "./auth";
 import dashboard from "./dashboard";
-import { jobState, userApplyState, addJobState } from "./jobs";
+import { jobState, userApplyState, addJobState, acceptJobState } from "./jobs";
 
 export default combineReducers({
   auth,
@@ -9,4 +9,5 @@ export default combineReducers({
   userApplyState,
   dashboard,
   addJobState,
+  acceptJobState,
 });

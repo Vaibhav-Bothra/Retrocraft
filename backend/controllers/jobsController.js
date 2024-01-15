@@ -51,3 +51,36 @@ module.exports.addJob = function (req, res) {
     });
   });
 };
+
+module.exports.accrejJob = async function (req, res) {
+  console.log(req.body);
+  await Jobs.findById(req.body.jobId).then(async (job) => {
+    let user = job.user;
+    let idx = -1;
+    for (let i = 0; i < user.length; i++) {
+      let u = user[i];
+      if (u.user == req.body.userId) {
+        idx = i;
+        break;
+      }
+    }
+    job.user[idx].applicationStatus = req.body.message;
+    await job.save();
+  });
+  await User.findById(req.body.userId).then(async (user) => {
+    let job = user.jobsHistory;
+    let idx = -1;
+    for (let i = 0; i < job.length; i++) {
+      if (job[i].job == req.body.jobId) {
+        idx = i;
+        break;
+      }
+    }
+    user.jobsHistory[idx].applicationStatus = req.body.message;
+    await user.save();
+    return res.json({
+      success: true,
+      successMessage: `Job ${req.body.message} successfully!!`,
+    });
+  });
+};

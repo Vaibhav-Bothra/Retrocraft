@@ -1,4 +1,7 @@
 import {
+  ACCEPT_JOB_FAILED,
+  ACCEPT_JOB_START,
+  ACCEPT_JOB_SUCCESS,
   ADD_JOB_FAILED,
   ADD_JOB_START,
   ADD_JOB_SUCCESS,
@@ -8,6 +11,9 @@ import {
   JOBS_APPLY_FAILED,
   JOBS_APPLY_START,
   JOBS_APPLY_SUCCESS,
+  REJECT_JOB_FAILED,
+  REJECT_JOB_START,
+  REJECT_JOB_SUCCESS,
 } from "../actions/actionTypes";
 
 const initialJobsState = {
@@ -90,6 +96,39 @@ export function addJobState(state = initialUserApplyState, action) {
         success: false,
       };
     case ADD_JOB_SUCCESS:
+      return {
+        ...state,
+        inProgress: false,
+        success: true,
+      };
+    default:
+      return state;
+  }
+}
+
+const initalJobAcceptState = {
+  error: null,
+  inProgress: false,
+  success: false,
+};
+
+export function acceptJobState(state = initalJobAcceptState, action) {
+  switch (action.type) {
+    case ACCEPT_JOB_START:
+    case REJECT_JOB_START:
+      return {
+        ...state,
+        inProgress: true,
+      };
+    case ACCEPT_JOB_FAILED:
+    case REJECT_JOB_FAILED:
+      return {
+        ...state,
+        error: action.error,
+        success: false,
+      };
+    case ACCEPT_JOB_SUCCESS:
+    case REJECT_JOB_SUCCESS:
       return {
         ...state,
         inProgress: false,
