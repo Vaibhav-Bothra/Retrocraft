@@ -8,6 +8,4 @@ For setting up the project, do the following steps:
    ```
    npm run
    ```
-5. The video demo link:
-     ```                             https://drive.google.com/file/d/1On-Xn-yBzHAt5akm4TVvH6NR7ztVj1YV/view?usp=drivesdk
-```
+5. The video demo link:                           https://drive.google.com/file/d/1On-Xn-yBzHAt5akm4TVvH6NR7ztVj1YV/view?usp=drivesdk
