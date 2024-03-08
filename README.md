@@ -1,4 +1,4 @@
-##RetroCraft Hub
+## RetroCraft Hub
 - It is fully **authenticated** web application built using **MongoDB, ReactJS, ExpressJS, NodeJS and PassportJS**.
 - It is the website in which the directors of film can upload the job describing the qualifications required for the title and the user can apply for the job.
 - There are two sides: admin and user side. Admin side is for the directors who can upload the job and accept or reject the profiles. User side is for the individuals who apply for the particular skill and can review the director's profile for knowing better.
